@@ -1,0 +1,37 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  name      String?
+  createdAt DateTime @default(now())
+}
+
+enum ReadingStatus {
+  WANT_TO_READ
+  READING
+  READ
+  ABANDONED
+}
+
+model Book {
+  id          Int           @id @default(autoincrement())
+  title       String
+  author      String
+  totalPages  Int?
+  currentPage Int           @default(0)
+  status      ReadingStatus @default(WANT_TO_READ)
+  rating      Int?
+  notes       String?
+  startedAt   DateTime?
+  finishedAt  DateTime?
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+}

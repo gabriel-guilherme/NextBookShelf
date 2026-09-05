@@ -1,69 +1,133 @@
-import Image from "next/image";
+import { prisma } from "@/lib/prisma";
+import Link from "next/link";
 
-export default function Home() {
+export default async function HomePage() {
+  const [
+    total,
+    reading,
+    read,
+    wantToRead,
+    //ratingAgg,
+    currentlyReading,
+    recentlyAdded,
+  ] = await Promise.all([
+    prisma.book.count(),
+    prisma.book.count({ where: { status: "READING" } }),
+    prisma.book.count({ where: { status: "READ" } }),
+    prisma.book.count({ where: { status: "WANT_TO_READ" } }),
+    /*prisma.book.aggregate({
+      _avg: { rating: true },
+      where: { rating: { not: null } },
+    }),*/
+    prisma.book.findMany({
+      where: { status: "READING" },
+      orderBy: { updatedAt: "desc" },
+      take: 5,
+    }),
+    prisma.book.findMany({
+      orderBy: { createdAt: "desc" },
+      take: 5,
+    }),
+  ]);
+
+  //const avgRating = ratingAgg._avg.rating;
+
+  const stats = [
+    { label: "Total de livros", value: total },
+    { label: "Lendo agora", value: reading },
+    { label: "Já lidos", value: read },
+    { label: "Quero ler", value: wantToRead },
+  ];
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+    <main className="mx-auto max-w-3xl px-4 py-10">
+      <h1 className="mb-1 text-2xl font-bold text-amber-600">Aga um</h1>
+      <p className="mb-8 text-gray-500">Alguma frase bacana...</p>
+
+      {/* Grid de estatísticas */}
+      <div className="mb-10 grid grid-cols-2 gap-4 sm:grid-cols-4">
+        {stats.map((stat) => (
+          <div
+            key={stat.label}
+            className="rounded-xl border border-gray-200 bg-white p-4 text-center shadow-sm"
           >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+            <p className="text-2xl font-bold text-gray-900">{stat.value}</p>
+            <p className="text-xs text-gray-500">{stat.label}</p>
+          </div>
+        ))}
+      </div>
+
+      {total === 0 ? (
+        <Link
+          href="/books/new"
+          className="inline-block rounded-lg bg-gray-900 px-4 py-2 text-sm font-medium text-white transition hover:bg-gray-700"
+        >
+          + Adicionar meu primeiro livro
+        </Link>
+      ) : (
+        <div className="grid gap-8 sm:grid-cols-2">
+          {/* Lendo agora */}
+          <section>
+            <h2 className="mb-3 text-sm font-semibold uppercase tracking-wide text-gray-500">
+              Lendo agora
+            </h2>
+            {currentlyReading.length === 0 && (
+              <p className="text-sm text-gray-400">
+                Nenhum livro em andamento.
+              </p>
+            )}
+            <ul className="flex flex-col gap-3">
+              {currentlyReading.map((book) => {
+                const progress =
+                  book.totalPages && book.totalPages > 0
+                    ? Math.min(
+                        100,
+                        Math.round((book.currentPage / book.totalPages) * 100),
+                      )
+                    : null;
+                return (
+                  <li key={book.id}>
+                    <Link
+                      href={`/books/${book.id}`}
+                      className="block rounded-xl border border-gray-200 bg-white p-4 shadow-sm transition hover:shadow-md"
+                    >
+                      <p className="font-medium text-gray-900">{book.title}</p>
+                      {progress !== null && (
+                        <div className="mt-2 h-1.5 w-full rounded-full bg-gray-200">
+                          <div
+                            className="h-1.5 rounded-full bg-blue-500"
+                            style={{ width: `${progress}%` }}
+                          />
+                        </div>
+                      )}
+                    </Link>
+                  </li>
+                );
+              })}
+            </ul>
+          </section>
+
+          {/* Adicionados recentemente */}
+          <section>
+            <h2 className="mb-3 text-sm font-semibold uppercase tracking-wide text-gray-500">
+              Adicionados recentemente
+            </h2>
+            <ul className="flex flex-col gap-3">
+              {recentlyAdded.map((book) => (
+                <li key={book.id}>
+                  <Link
+                    href={`/books/${book.id}`}
+                    className="block rounded-xl border border-gray-200 bg-white p-4 shadow-sm transition hover:shadow-md"
+                  >
+                    <p className="font-medium text-gray-900">{book.title}</p>
+                    <p className="text-sm text-gray-500">{book.author}</p>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </section>
         </div>
-      </main>
-    </div>
+      )}
+    </main>
   );
 }

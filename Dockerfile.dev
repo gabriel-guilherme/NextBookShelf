@@ -1,0 +1,17 @@
+FROM node:20-alpine
+
+# Necessário para o Prisma no Alpine
+RUN apk add --no-cache libc6-compat openssl
+
+WORKDIR /app
+
+# Instala dependências primeiro (cache de layer)
+COPY package.json package-lock.json* ./
+RUN npm install
+
+# Copia o restante do código (será sobrescrito pelo volume em dev)
+COPY . .
+
+EXPOSE 3000
+
+CMD ["npm", "run", "dev"]
