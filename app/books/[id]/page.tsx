@@ -1,6 +1,7 @@
 import { prisma } from "@/lib/prisma";
 import { notFound } from "next/navigation";
 import { updateBook, deleteBook } from "./actions";
+import { SubmitButton } from "@/components/SubmitButton";
 import Link from "next/link";
 
 export default async function BookDetailPage({
@@ -103,12 +104,7 @@ export default async function BookDetailPage({
           />
         </label>
 
-        <button
-          type="submit"
-          className="mt-2 rounded-lg bg-gray-900 px-4 py-2 font-medium text-white transition hover:bg-gray-700"
-        >
-          Salvar
-        </button>
+        <SubmitButton>Salvar</SubmitButton>
       </form>
 
       <form action={deleteBook} className="mt-4">

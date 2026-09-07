@@ -3,7 +3,7 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 
 export const metadata: Metadata = {
-  title: "Books Manager",
+  title: "Rainbound",
   description: "Acompanhe suas leituras",
 };
 
@@ -14,7 +14,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-BR">
-      <body className="min-h-screen bg-emerald-950">
+      <body className="min-h-screen bg-secondary">
         <Navbar />
         {children}
       </body>

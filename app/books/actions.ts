@@ -20,5 +20,5 @@ export async function createBook(formData: FormData) {
     },
   });
 
-  redirect("books");
+  redirect("/books");
 }

@@ -1,4 +1,5 @@
 import { createBook } from "../actions";
+import { SubmitButton } from "@/components/SubmitButton";
 import Link from "next/link";
 
 export default function NewBookPage() {
@@ -43,12 +44,7 @@ export default function NewBookPage() {
           />
         </label>
 
-        <button
-          type="submit"
-          className="mt-2 rounded-lg bg-gray-900 px-4 py-2 font-medium text-white transition hover:bg-gray-700"
-        >
-          Salvar
-        </button>
+        <SubmitButton>Salvar</SubmitButton>
       </form>
     </main>
   );
