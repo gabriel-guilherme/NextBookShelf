@@ -1,10 +1,9 @@
 import { createBook } from "../actions";
 import { SubmitButton } from "@/components/SubmitButton";
-import Link from "next/link";
-import { ArrowLeft } from "lucide-react";
 
 import { statusLabel } from "../types";
 import InputCover from "@/components/InputCover";
+import BackButton from "@/components/BackButton";
 
 const statusOptions = ["WANT_TO_READ", "READING", "READ", "ABANDONED"];
 
@@ -14,12 +13,7 @@ const stylePattern =
 export default function NewBookPage() {
   return (
     <main className="mx-auto max-w-7xl px-4 py-4">
-      <Link
-        href={"/books"}
-        className="mb-6 inline-block text-sm text-primary hover:text-interaction"
-      >
-        <ArrowLeft size={36} />
-      </Link>
+      <BackButton />
       <div className="flex flex-col p-4 sm:p-6 md:p-10">
         <h1 className="mb-6 text-2xl font-bold text-contrast">
           Adicionar livro

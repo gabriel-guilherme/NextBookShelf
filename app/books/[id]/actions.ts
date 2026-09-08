@@ -22,6 +22,8 @@ export async function updateBook(formData: FormData) {
   const notes = formData.get("notes") as string;
 
   const data: Parameters<typeof prisma.book.update>[0]["data"] = {
+    title,
+    author,
     status,
     currentPage: currentPageRaw ? Number(currentPageRaw) : 0,
     notes: notes || null,
