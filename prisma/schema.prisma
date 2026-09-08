@@ -29,6 +29,7 @@ model Book {
   currentPage Int           @default(0)
   status      ReadingStatus @default(WANT_TO_READ)
   rating      Int?
+  category    String?
   notes       String?
   startedAt   DateTime?
   finishedAt  DateTime?

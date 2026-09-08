@@ -17,7 +17,7 @@ type BookCardProps = {
 };
 
 function bookProgress(currentPage: number, totalPages: number) {
-  return ((currentPage / totalPages) * 100).toFixed(0);
+  return ((currentPage / totalPages) * 100).toFixed(2);
 }
 
 export default function BookPoster({ book }: BookCardProps) {

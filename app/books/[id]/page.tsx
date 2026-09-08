@@ -24,7 +24,7 @@ export default async function BookDetailPage({
 
   const progress =
     book.totalPages && book.totalPages > 0
-      ? Math.min(100, Math.round((book.currentPage / book.totalPages) * 100))
+      ? ((book.currentPage / book.totalPages) * 100).toFixed(2)
       : null;
 
   return (

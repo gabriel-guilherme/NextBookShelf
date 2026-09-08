@@ -3,17 +3,22 @@
 import { prisma } from "@/lib/prisma";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
+import { ReadingStatus } from "@/src/generated/prisma/enums";
 
 export async function updateBook(formData: FormData) {
   const id = Number(formData.get("id"));
-  const status = formData.get("status") as
-    | "WANT_TO_READ"
-    | "READING"
-    | "READ"
-    | "ABANDONED";
-
-  const currentPageRaw = formData.get("currentPage") as string;
+  const title = formData.get("title") as string;
+  const author = formData.get("author") as string;
+  const totalPagesRaw = formData.get("totalPages") as string;
+  const statusRaw = formData.get("status");
+  const status = Object.values(ReadingStatus).includes(
+    statusRaw as ReadingStatus,
+  )
+    ? (statusRaw as ReadingStatus)
+    : ReadingStatus.WANT_TO_READ;
   const ratingRaw = formData.get("rating") as string;
+  const currentPageRaw = formData.get("currentPage") as string;
+  const category = formData.get("category") as string;
   const notes = formData.get("notes") as string;
 
   const data: Parameters<typeof prisma.book.update>[0]["data"] = {
@@ -21,6 +26,7 @@ export async function updateBook(formData: FormData) {
     currentPage: currentPageRaw ? Number(currentPageRaw) : 0,
     notes: notes || null,
     rating: ratingRaw ? Number(ratingRaw) : null,
+    category: category || null,
   };
 
   const current = await prisma.book.findUniqueOrThrow({ where: { id } });
