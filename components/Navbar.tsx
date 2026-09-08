@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { Plus } from "lucide-react";
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -38,7 +39,7 @@ export default function Navbar() {
             aria-label="Adicionar livro"
             className={`flex h-10 w-10 items-center justify-center rounded-lg bg-interaction text-xl text-contrast transition hover:bg-interaction-hover hover:text-primary hover:bg-interaction-contrast ${isNewBookRoute ? "bg-interaction-contrast text-primary" : ""}`}
           >
-            <span className="-translate-y-px">+</span>
+            <Plus />
           </Link>
         </div>
       </div>

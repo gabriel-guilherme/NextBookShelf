@@ -1,51 +1,123 @@
 import { createBook } from "../actions";
 import { SubmitButton } from "@/components/SubmitButton";
 import Link from "next/link";
+import { ArrowLeft } from "lucide-react";
+
+import { statusLabel } from "../types";
+import InputCover from "@/components/InputCover";
+
+const statusOptions = ["WANT_TO_READ", "READING", "READ", "ABANDONED"];
+
+const stylePattern =
+  "shadow shadow-black/75 opacity-30 hover:opacity-70 focus:opacity-70 bg-contrast round rounded-lg border border-gray 300 px-3 py-2 text-primary outline-none focus:border-gray-900";
 
 export default function NewBookPage() {
   return (
-    <main className="mx-auto max-w-md px-4 py-10">
+    <main className="mx-auto max-w-7xl px-4 py-4">
       <Link
         href={"/books"}
-        className="mb-6 inline-block text-sm text-gray-500 hover:text-gray-800"
+        className="mb-6 inline-block text-sm text-primary hover:text-interaction"
       >
-        Voltar
+        <ArrowLeft size={36} />
       </Link>
-      <h1 className="mb-6 text-2xl font-bold text-gray-900">Adicionar livro</h1>
+      <div className="flex flex-col p-4 sm:p-6 md:p-10">
+        <h1 className="mb-6 text-2xl font-bold text-contrast">
+          Adicionar livro
+        </h1>
 
-      <form action={createBook} className="flex flex-col gap-4">
-        <label className="flex flex-col gap-1 text-sm font-medium text-gray-700">
-          Título
-          <input
-            type="text"
-            name="title"
-            required
-            className="rounded-lg border border-gray-300 px-3 py-2 text-gray-900 outline-none focus:border-gray-900"
-          />
-        </label>
+        <form
+          action={createBook}
+          className="grid w-full grid-cols-1 gap-8 md:grid-cols-[40%_minmax(0,1fr)] md:gap-30"
+        >
+          <section className="relative mx-auto aspect-[3/4] w-full max-w-64 md:mx-0 md:max-w-none">
+            <InputCover />
+          </section>
+          <section className="flex flex-col w-full text-sm font-medium text-contrast gap-6">
+            <div className="flex flex-col">
+              <label>Título</label>
+              <input
+                type="text"
+                name="title"
+                required
+                className={stylePattern}
+              />
+            </div>
 
-        <label className="flex flex-col gap-1 text-sm font-medium text-gray-700">
-          Autor
-          <input
-            type="text"
-            name="author"
-            required
-            className="rounded-lg border border-gray-300 px-3 py-2 text-gray-900 outline-none focus:border-gray-900"
-          />
-        </label>
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-[80%_minmax(0,1fr)]">
+              <div className="flex flex-col">
+                <label>Autor</label>
+                <input
+                  type="text"
+                  name="author"
+                  required
+                  className={stylePattern}
+                />
+              </div>
 
-        <label className="flex flex-col gap-1 text-sm font-medium text-gray-700">
-          Total de páginas
-          <input
-            type="number"
-            name="totalPages"
-            min={1}
-            className="rounded-lg border border-gray-300 px-3 py-2 text-gray-900 outline-none focus:border-gray-900"
-          />
-        </label>
+              <div className="flex flex-col">
+                <label>Qtd. Páginas</label>
+                <input
+                  type="number"
+                  name="totalPages"
+                  required
+                  className={`${stylePattern} text-center`}
+                />
+              </div>
+            </div>
 
-        <SubmitButton>Salvar</SubmitButton>
-      </form>
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-[60%_minmax(0,1fr)_18%]">
+              <div className="flex flex-col">
+                <label>Status</label>
+                <select
+                  name="status"
+                  className={`${stylePattern} cursor-pointer text-center`}
+                >
+                  <option value="">Status</option>
+                  {statusOptions.map((s) => (
+                    <option key={s} value={s}>
+                      {statusLabel[s]}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div className="flex flex-col">
+                <label>Nota</label>
+                <input
+                  type="number"
+                  name="rating"
+                  defaultValue={0}
+                  className={`${stylePattern} text-center`}
+                />
+              </div>
+              <div className="flex flex-col">
+                <label>Pág. Lidas</label>
+                <input
+                  type="number"
+                  defaultValue={0}
+                  name="currentPage"
+                  className={`${stylePattern} text-center`}
+                />
+              </div>
+            </div>
+
+            <div className="flex flex-col">
+              <label>Categoria</label>
+              <input type="text" name="category" className={stylePattern} />
+            </div>
+
+            <div className="flex flex-col">
+              <label>Notas</label>
+              <textarea
+                name="notes"
+                rows={7}
+                className={`${stylePattern} resize-y align-top`}
+              />
+            </div>
+            <SubmitButton>Salvar</SubmitButton>
+          </section>
+        </form>
+      </div>
     </main>
   );
 }
