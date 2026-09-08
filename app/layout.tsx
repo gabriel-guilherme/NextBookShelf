@@ -6,6 +6,9 @@ import Footer from "@/components/Footer";
 export const metadata: Metadata = {
   title: "Rainbound",
   description: "Acompanhe suas leituras",
+  icons: {
+    icon: "/favicon.svg",
+  },
 };
 
 export default function RootLayout({
