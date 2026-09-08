@@ -3,7 +3,7 @@
 import { prisma } from "@/lib/prisma";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
-import { ReadingStatus } from "@/src/generated/prisma/enums";
+import { ReadingStatus } from "@/generated/prisma/enums";
 
 export async function updateBook(formData: FormData) {
   const id = Number(formData.get("id"));

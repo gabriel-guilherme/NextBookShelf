@@ -1,7 +1,7 @@
 "use server";
 
 import { prisma } from "@/lib/prisma";
-import { ReadingStatus } from "@/src/generated/prisma/enums";
+import { ReadingStatus } from "@/generated/prisma/enums";
 import { redirect } from "next/navigation";
 
 export async function createBook(formData: FormData) {

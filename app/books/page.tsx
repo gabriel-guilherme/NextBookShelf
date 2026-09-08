@@ -1,6 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import Link from "next/link";
-import type { Prisma } from "@/src/generated/prisma/client";
+import type { Prisma } from "@/generated/prisma/client";
 
 import { FilterForm } from "@/components/FilterForm";
 
