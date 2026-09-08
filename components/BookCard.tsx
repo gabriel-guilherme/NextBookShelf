@@ -42,7 +42,7 @@ export default function BookCard({ book }: BookCardProps) {
         </div>
         <span
           aria-label={`Opções do livro ${book.title}`}
-          className="flex items-center justify-center rounded-md p-1 text-contrast transition group-hover:bg-interaction group-hover:text-primary"
+          className="flex items-center justify-center rounded-md p-1 text-contrast transition hover:bg-interaction hover:text-primary"
         >
           <Ellipsis size={24} strokeWidth={2} />
         </span>
