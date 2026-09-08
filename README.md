@@ -1,5 +1,17 @@
 # Rainbound
 
+<p align="center">
+  <strong>A personal space for your books and reading journey.</strong>
+</p>
+
+<p align="center">
+  <a href="http://localhost:3000">Run the app</a>
+  &nbsp;&middot;&nbsp;
+  <a href="https://www.figma.com/design/kVktZSQ9hyPnLbTLgkpAA4/Rainbound?node-id=77-667&t=mSs14KiP1G4yguAA-1">View the Figma prototype</a>
+</p>
+
+---
+
 ## English
 
 Rainbound is a personal book manager built with Next.js. It helps you organize your library and follow your reading progress in one place.
@@ -30,6 +42,12 @@ The project supports two ways of using a book:
 - Tailwind CSS 4
 - Docker Compose
 - Lucide icons and `lucide-react-motion`
+
+### Design & prototyping
+
+The interface and navigation flows were designed in Figma. Explore the complete prototype:
+
+[![Open Figma prototype](https://img.shields.io/badge/Open%20Figma%20prototype-F24E1E?style=for-the-badge&logo=figma&logoColor=white)](https://www.figma.com/design/kVktZSQ9hyPnLbTLgkpAA4/Rainbound?node-id=77-667&t=mSs14KiP1G4yguAA-1)
 
 ### Requirements
 
@@ -96,11 +114,15 @@ app/                   Next.js pages, layouts, and server actions
 components/            Reusable UI components
 lib/                   Shared services, including Prisma
 prisma/                Prisma schema and migrations
-generated/prisma/  Generated Prisma Client
+generated/prisma/     Generated Prisma Client
 public/                Static assets, including book covers
 ```
 
 ## Portugues
+
+<p align="center">
+  <strong>Um espaço pessoal para organizar seus livros e sua jornada de leitura.</strong>
+</p>
 
 Rainbound e um gerenciador pessoal de livros feito com Next.js. Ele ajuda a organizar sua biblioteca e acompanhar seu progresso de leitura em um so lugar.
 
@@ -120,6 +142,12 @@ O projeto permite usar um livro de duas formas:
 - Categorias e observacoes pessoais
 - Formularios responsivos para desktop e celular
 - Persistencia em PostgreSQL usando Prisma
+
+### Design e prototipagem
+
+A interface e os fluxos de navegacao foram planejados no Figma. Acesse o prototipo completo:
+
+[![Abrir prototipo no Figma](https://img.shields.io/badge/Abrir%20prototipo%20no%20Figma-F24E1E?style=for-the-badge&logo=figma&logoColor=white)](https://www.figma.com/design/kVktZSQ9hyPnLbTLgkpAA4/Rainbound?node-id=77-667&t=mSs14KiP1G4yguAA-1)
 
 ### Tecnologias
 
@@ -196,6 +224,6 @@ app/                   Paginas, layouts e server actions do Next.js
 components/            Componentes reutilizaveis de interface
 lib/                   Servicos compartilhados, incluindo o Prisma
 prisma/                Schema e migrations do Prisma
-generated/prisma/  Prisma Client gerado
+generated/prisma/     Prisma Client gerado
 public/                Arquivos estaticos, incluindo capas de livros
 ```
