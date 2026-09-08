@@ -28,7 +28,7 @@ export default async function Reading() {
               : null;
           return (
             <li key={book.id}>
-              <BookCard book={book} />
+              <BookCard book={{ ...book, totalPages: book.totalPages ?? 0 }} />
             </li>
           );
         })}

@@ -6,8 +6,8 @@ export const statusLabel: Record<string, string> = {
 };
 
 export const statusColor: Record<string, string> = {
-  WANT_TO_READ: "bg-gray-100 text-gray-700",
-  READING: "bg-blue-100 text-blue-700",
-  READ: "bg-green-100 text-green-700",
-  ABANDONED: "bg-red-100 text-red-700",
+  WANT_TO_READ: "bg-gray-100 text-gray-700 border-2 border-gray-400",
+  READING: "bg-blue-100 text-blue-700 border-2 border-blue-400",
+  READ: "bg-green-100 text-green-700 border-2 border-green-400",
+  ABANDONED: "bg-red-100 text-red-700 border-2 border-red-400",
 };

@@ -1,37 +1,96 @@
 "use client";
 
+import { useRouter } from "next/navigation";
+import { FormEvent, useRef, useState, useTransition } from "react";
 import { statusLabel } from "@/app/books/types";
+import { Filter, Search } from "lucide-react";
 
 const statusOptions = ["WANT_TO_READ", "READING", "READ", "ABANDONED"];
 
+const stylePattern =
+  "rounded-lg px-3 py-2 text-sm text-primary outline-none bg-contrast shadow shadow-black/75 opacity-85 focus:opacity-100 hover:opacity-100 focus:border-gray-900";
+
 export function FilterForm({ q, status }: { q?: string; status?: string }) {
+  const router = useRouter();
+  const [searchOpen, setSearchOpen] = useState(Boolean(q));
+  const [isPending, startTransition] = useTransition();
+  const searchInputRef = useRef<HTMLInputElement>(null);
+
+  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+
+    const formData = new FormData(event.currentTarget);
+    const params = new URLSearchParams();
+    const query = String(formData.get("q") ?? "").trim();
+    const selectedStatus = String(formData.get("status") ?? "");
+
+    if (query) params.set("q", query);
+    if (selectedStatus) params.set("status", selectedStatus);
+
+    startTransition(() => {
+      const queryString = params.toString();
+      router.replace(queryString ? `/books?${queryString}` : "/books", {
+        scroll: false,
+      });
+    });
+  }
+
+  function openSearch() {
+    const searchInput = searchInputRef.current;
+
+    setSearchOpen(true);
+    searchInput?.classList.remove("hidden");
+    searchInput?.classList.add("block");
+    searchInput?.focus();
+    searchInput?.select();
+  }
+
   return (
-    <form className="mb-6 flex flex-wrap gap-3">
-      <input
-        type="text"
-        name="q"
-        defaultValue={q ?? ""}
-        placeholder="Buscar por título ou autor..."
-        className="border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-900 outline-none focus:border-gray-900"
-      />
-      <select
-        name="status"
-        defaultValue={status ?? ""}
-        onChange={(e) => e.target.form?.requestSubmit()}
-        className="border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-900 outline-none focus:border-gray-900"
-      >
-        <option value="">Status</option>
-        {statusOptions.map((s) => (
-          <option key={s} value={s}>
-            {statusLabel[s]}
-          </option>
-        ))}
-      </select>
+    <form
+      onSubmit={handleSubmit}
+      className="mb-6 grid grid-cols-[1fr_44px] gap-3 wrap"
+    >
+      <div className="flex min-w-0 gap-5">
+        <input
+          ref={searchInputRef}
+          type="text"
+          name="q"
+          defaultValue={q ?? ""}
+          placeholder="Buscar por título ou autor..."
+          onChange={(e) => e.target.form?.requestSubmit()}
+          onBlur={() => setSearchOpen(false)}
+          className={`${stylePattern} min-w-0 flex-1 ${searchOpen ? "block" : "hidden"} sm:block`}
+        />
+        {!searchOpen && (
+          <button
+            type="button"
+            aria-label="Abrir busca"
+            onClick={openSearch}
+            className={`${stylePattern} flex aspect-square items-center justify-center rounded-lg p-0 cursor-pointer sm:hidden`}
+          >
+            <Search size={18} />
+          </button>
+        )}
+        <select
+          name="status"
+          defaultValue={status ?? ""}
+          onChange={(e) => e.target.form?.requestSubmit()}
+          className={`${stylePattern} cursor-pointer`}
+        >
+          <option value="">Status</option>
+          {statusOptions.map((s) => (
+            <option key={s} value={s}>
+              {statusLabel[s]}
+            </option>
+          ))}
+        </select>
+      </div>
       <button
         type="submit"
-        className="border border-gray-300 rounded-lg px-4 py-2 text-sm font-medium text-gray-700 transition hover:bg-gray-100"
+        disabled={isPending}
+        className={`${stylePattern} flex aspect-square items-center justify-center rounded-lg p-0 cursor-pointer`}
       >
-        Filtrar
+        <Filter size={18} />
       </button>
     </form>
   );

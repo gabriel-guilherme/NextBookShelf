@@ -5,6 +5,7 @@ import type { Prisma } from "@/src/generated/prisma/client";
 import { FilterForm } from "@/components/FilterForm";
 
 import { statusLabel, statusColor } from "./types";
+import BookPoster from "@/components/BookPoster";
 
 export default async function BooksPage({
   searchParams,
@@ -31,15 +32,15 @@ export default async function BooksPage({
   });
 
   return (
-    <main className="mx-auto max-w-2xl px-4 py-10">
+    <main className="mx-auto max-w-7xl px-4 py-10">
       <div className="mb-8 flex items-center justify-between">
-        <h1 className="text-2xl font-bold text-gray-900">Meus Livros</h1>
-        <Link
+        <h1 className="text-2xl font-bold text-contrast">Meus Livros</h1>
+        {/*<Link
           href="/books/new"
           className="rounded-lg bg-gray-900 px-4 py-2 text-sm font-medium text-white transition hover:bg-gray-700"
         >
           Adicionar livro
-        </Link>
+        </Link>*/}
       </div>
 
       <FilterForm q={q} status={status} />
@@ -52,23 +53,19 @@ export default async function BooksPage({
         </p>
       )}
 
-      <ul className="flex flex-col gap-3">
+      <ul className="grid grid-cols-2 gap-3 md:grid-cols-4 lg:grid-cols-6 overflow-y-auto max-h-200">
         {books.map((book) => (
           <li key={book.id}>
-            <Link
-              href={`/books/${book.id}`}
-              className="flex items-center justify-between border border-gray-200 rounded-xl bg-white p-4 shadow-sm transition hover:border-gray-300 hover:shadow-md"
-            >
-              <div>
-                <p className="font-semibold text-gray-900">{book.title}</p>
-                <p className="text-sm text-gray-500">{book.author}</p>
-              </div>
-              <span
-                className={`text-xs font-medium px-3 py-1 ${statusColor[book.status]} rounded-full`}
-              >
-                {statusLabel[book.status]}
-              </span>
-            </Link>
+            <BookPoster
+              book={{
+                id: book.id,
+                title: book.title,
+                author: book.author,
+                currentPage: book.currentPage,
+                totalPages: book.totalPages ?? 0,
+                status: book.status,
+              }}
+            />
           </li>
         ))}
       </ul>
