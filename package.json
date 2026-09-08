@@ -13,6 +13,7 @@
     "@prisma/client": "7.10.0",
     "dotenv": "^17.4.2",
     "lucide-react": "^1.41.0",
+    "lucide-react-motion": "^0.5.1",
     "next": "16.3.4",
     "pg": "^8.23.0",
     "postcss": "^8.5.28",

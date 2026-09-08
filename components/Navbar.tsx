@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Plus } from "lucide-react";
+import { Plus, CloudRainWind } from "lucide-react-motion";
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -22,10 +22,15 @@ export default function Navbar() {
           >
             Início
           </Link>
-          <span className="order-first whitespace-nowrap text-2xl font-bold text-white transition text-contrast hover:text-secondary sm:order-none">
-            <span aria-hidden="true">📚</span>
-            <span className="hidden sm:inline"> Books Manager</span>
-          </span>
+          <Link
+            href="/"
+            data-motion-icon-group
+            className="flex gap-2 items-center justify-center cursor-pointer order-first whitespace-nowrap text-2xl font-bold text-interaction-contrast transition text-contrast hover:text-interaction sm:order-none"
+          >
+            <CloudRainWind aria-hidden="true" trigger="parent-hover" />
+
+            <span className="hidden sm:inline">Rainbound</span>
+          </Link>
           <Link
             href="/books"
             className={`text-sm font-medium transition sm:text-xl ${isBookRoute ? "text-secondary" : "text-contrast hover:text-secondary"}`}
