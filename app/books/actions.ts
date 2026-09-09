@@ -49,7 +49,7 @@ export async function createBook(formData: FormData) {
     data: {
       title,
       author,
-      totalPages: totalPagesRaw ? Number(totalPagesRaw) : null,
+      totalPages: totalPagesRaw ? Number(totalPagesRaw) : undefined,
       status,
       rating: ratingRaw ? Number(ratingRaw) : 0,
       currentPage: currentPageRaw ? Number(currentPageRaw) : 0,

@@ -8,6 +8,8 @@ export default async function RecentlyAdded() {
       take: 5,
     }),
   ]);
+
+  console.log(recentlyAdded);
   return (
     <section>
       <h2 className="mb-3 text-sm font-semibold uppercase tracking-wide text-contrast">
@@ -19,7 +21,7 @@ export default async function RecentlyAdded() {
             <BookCard
               book={{
                 ...book,
-                totalPages: book.totalPages ?? 0,
+                totalPages: book.totalPages,
                 coverUrl: book.coverUrl ?? "",
               }}
             />

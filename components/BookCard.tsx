@@ -1,6 +1,5 @@
 import Image from "next/image";
 import BookActionsMenu from "./BookActionsMenu";
-import { deleteBook } from "@/app/actions";
 import ProgressBar from "./ProgressBar";
 
 type BookCardProps = {
@@ -19,6 +18,7 @@ function bookProgress(currentPage: number, totalPages: number) {
 }
 
 export default function BookCard({ book }: BookCardProps) {
+  console.log(book.currentPage, book.totalPages);
   return (
     <div
       //href={`/books/${book.id}`}
