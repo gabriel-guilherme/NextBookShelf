@@ -72,6 +72,7 @@ export async function updateBook(formData: FormData) {
     data,
   });
 
+  revalidatePath("/");
   revalidatePath("/books");
   revalidatePath(`/books/${id}`);
 }

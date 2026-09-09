@@ -20,4 +20,5 @@ export async function deleteBook(formData: FormData) {
   });
 
   revalidatePath("/");
+  revalidatePath("/books");
 }
