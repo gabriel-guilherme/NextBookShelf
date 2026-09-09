@@ -57,7 +57,7 @@ export default function BookActionsMenu({
       </button>
 
       {isOpen && (
-        <div className="absolute top-0 right-0 z-50 flex w-36 flex-col rounded-lg bg-contrast shadow-lg ring-1 ring-black/5 overflow-hidden">
+        <div className="absolute top-0 right-0 z-50 flex w-36 flex-col rounded-lg opacity-90 bg-contrast shadow-lg ring-1 ring-black/5 overflow-hidden">
           <Link
             href={`/books/${bookId}`}
             onClick={(e) => e.stopPropagation()}
