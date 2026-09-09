@@ -35,6 +35,7 @@ export default function BookCard({ book }: BookCardProps) {
             sizes="full"
             alt={`Capa do livro ${book.title}`}
             fill
+            loading="eager"
             className="rounded-md object-cover shadow-md shadow-black/50"
           />
         </div>

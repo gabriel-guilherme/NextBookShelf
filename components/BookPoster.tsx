@@ -34,6 +34,7 @@ export default function BookPoster({ book }: BookCardProps) {
           sizes="full"
           alt={`Capa do livro ${book.title}`}
           fill
+          loading="eager"
           className="rounded-md object-cover shadow-md shadow-black/50"
         />
         <span

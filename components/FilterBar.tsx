@@ -3,15 +3,23 @@
 import { useRouter } from "next/navigation";
 import { FormEvent, useTransition } from "react";
 import { statusLabel } from "@/app/books/types";
-import { Filter } from "lucide-react";
 import SearchInput from "./SearchInput";
+import { FilterButton } from "./FilterButton";
 
 const statusOptions = ["WANT_TO_READ", "READING", "READ", "ABANDONED"];
 
 const stylePattern =
   "rounded-lg px-3 py-2 text-sm text-primary outline-none bg-contrast shadow shadow-black/75 opacity-85 focus:opacity-100 hover:opacity-100 focus:border-gray-900";
 
-export function FilterForm({ q, status }: { q?: string; status?: string }) {
+export function FilterBar({
+  q,
+  status,
+  sort,
+}: {
+  q?: string;
+  status?: string;
+  sort?: string;
+}) {
   const router = useRouter();
 
   const [isPending, startTransition] = useTransition();
@@ -56,13 +64,7 @@ export function FilterForm({ q, status }: { q?: string; status?: string }) {
           ))}
         </select>
       </div>
-      <button
-        type="submit"
-        disabled={isPending}
-        className={`${stylePattern} flex aspect-square items-center justify-center rounded-lg p-0 cursor-pointer`}
-      >
-        <Filter size={18} />
-      </button>
+      <FilterButton />
     </form>
   );
 }

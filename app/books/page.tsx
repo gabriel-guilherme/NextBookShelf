@@ -1,20 +1,26 @@
 import { prisma } from "@/lib/prisma";
 import type { Prisma } from "@/generated/prisma/client";
 
-import { FilterForm } from "@/components/FilterForm";
+import { FilterBar } from "@/components/FilterBar";
 import BookPoster from "@/components/BookPoster";
+import { orderByOptions } from "./types";
 
 export default async function BooksPage({
   searchParams,
 }: {
-  searchParams: Promise<{ status?: string; q?: string }>;
+  searchParams: Promise<{
+    status?: string;
+    q?: string;
+    sort?: string;
+  }>;
 }) {
-  const { status, q } = await searchParams;
+  const { status, q, sort } = await searchParams;
 
   const where: Prisma.BookWhereInput = {
     status: status
       ? (status as Prisma.EnumReadingStatusFilter["equals"])
       : undefined,
+
     OR: q
       ? [
           { title: { contains: q, mode: "insensitive" } },
@@ -23,24 +29,53 @@ export default async function BooksPage({
       : undefined,
   };
 
+  const isTitleSort = sort === "title_asc" || sort === "title_desc";
+
+  const isProgressSort = sort === "progress_asc" || sort === "progress_desc";
+
+  const isClientSort = isTitleSort || isProgressSort;
+
+  const orderBy = isClientSort
+    ? undefined
+    : (orderByOptions[sort as keyof typeof orderByOptions] ??
+      orderByOptions.added_desc);
+
   const books = await prisma.book.findMany({
     where,
-    orderBy: { createdAt: "desc" },
+    orderBy,
   });
+
+  // Ordenacao por titulo
+  if (isTitleSort) {
+    books.sort((a, b) => {
+      const comparison = a.title.localeCompare(b.title, "pt-BR", {
+        sensitivity: "base",
+      });
+
+      return sort === "title_asc" ? comparison : -comparison;
+    });
+  }
+
+  // Ordenacao por progresso
+  if (isProgressSort) {
+    books.sort((a, b) => {
+      const progressA = a.totalPages ? a.currentPage / a.totalPages : 0;
+
+      const progressB = b.totalPages ? b.currentPage / b.totalPages : 0;
+
+      return sort === "progress_asc"
+        ? progressA - progressB
+        : progressB - progressA;
+    });
+  }
 
   return (
     <main className="mx-auto max-w-7xl px-4 py-10">
       <div className="mb-8 flex items-center justify-between">
         <h1 className="text-2xl font-bold text-contrast">Meus Livros</h1>
-        {/*<Link
-          href="/books/new"
-          className="rounded-lg bg-gray-900 px-4 py-2 text-sm font-medium text-white transition hover:bg-gray-700"
-        >
-          Adicionar livro
-        </Link>*/}
       </div>
 
-      <FilterForm q={q} status={status} />
+      <FilterBar q={q} status={status} sort={sort} />
 
       {books.length === 0 && (
         <p className="text-gray-500">
