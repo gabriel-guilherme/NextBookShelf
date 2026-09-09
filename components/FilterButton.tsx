@@ -74,7 +74,7 @@ export function FilterButton({ sort }: FilterButtonProps) {
               key={option.value}
               type="button"
               onClick={() => handleSort(option.value)}
-              className={`flex w-full cursor-pointer items-center gap-2 px-4 py-2 text-sm text-primary hover:bg-interaction ${
+              className={`flex w-full cursor-pointer gap-2 px-4 py-2 text-sm text-primary hover:bg-interaction ${
                 sort === option.value ? "bg-interaction" : ""
               }`}
             >
