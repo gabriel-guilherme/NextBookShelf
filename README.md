@@ -5,68 +5,182 @@
 </p>
 
 <p align="center">
-  <a href="http://localhost:3000">Run the app</a>
+  A full-stack book management application built with Next.js, Prisma, PostgreSQL, and Cloudinary.
+</p>
+
+<p align="center">
+  <a href="https://rainbound.vercel.app">Live Demo</a>
   &nbsp;&middot;&nbsp;
-  <a href="https://www.figma.com/design/kVktZSQ9hyPnLbTLgkpAA4/Rainbound?node-id=77-667&t=mSs14KiP1G4yguAA-1">View the Figma prototype</a>
+  <a href="https://www.figma.com/design/kVktZSQ9hyPnLbTLgkpAA4/Rainbound?node-id=77-667&t=mSs14KiP1G4yguAA-1">Figma Prototype</a>
 </p>
 
 ---
 
-## English
+## About
 
-Rainbound is a personal book manager built with Next.js. It helps you organize your library and follow your reading progress in one place.
+Rainbound is a personal book manager designed to make organizing and keeping track of a reading library simple and enjoyable.
 
-The project supports two ways of using a book:
+The application allows users to catalog their books, track reading progress, manage reading statuses, add personal notes, and rate completed or ongoing reads.
 
-- Add the book's information to your library, such as title, author, status, rating, pages, category, and notes.
-- Add a book and use its page to track your reading progress, update its status, and keep notes while you read.
+A book can be used simply as a library entry or as an active reading space where its progress and information can be updated over time.
 
-### Features
+The project was built as a full-stack application, combining a responsive frontend with server-side rendering, server actions, persistent PostgreSQL data, and cloud-based image storage.
 
-- Responsive book library with poster cards
+## Features
+
+- Responsive personal book library
+- Book cards with cover images
 - Search by title or author
-- Filter by reading status
+- Filter books by reading status
 - Add, edit, and delete books
-- Reading status, rating, current page, and total pages
+- Reading statuses:
+  - Want to read
+  - Reading
+  - Read
+  - Abandoned
+
+- Current page and total pages tracking
 - Reading progress indicator
-- Categories and personal notes
+- Book ratings
+- Categories
+- Personal notes
+- Book cover uploads
 - Responsive forms for desktop and mobile
-- PostgreSQL persistence through Prisma
+- Persistent PostgreSQL database
+- Server-side operations with Next.js Server Actions
 
-### Tech stack
+## Tech Stack
 
-- Next.js 16 with the App Router
-- React 19 and TypeScript
-- PostgreSQL 16
-- Prisma 7
-- Tailwind CSS 4
-- Docker Compose
-- Lucide icons and `lucide-react-motion`
+### Frontend & Backend
 
-### Design & prototyping
+- **Next.js 16** — App Router, SSR, and Server Actions
+- **React 19**
+- **TypeScript**
+- **Tailwind CSS 4**
+- **Lucide Icons**
+- **lucide-react-motion**
 
-The interface and navigation flows were designed in Figma. Explore the complete prototype:
+### Database
 
-[![Open Figma prototype](https://img.shields.io/badge/Open%20Figma%20prototype-F24E1E?style=for-the-badge&logo=figma&logoColor=white)](https://www.figma.com/design/kVktZSQ9hyPnLbTLgkpAA4/Rainbound?node-id=77-667&t=mSs14KiP1G4yguAA-1)
+- **PostgreSQL 16**
+- **Prisma 7**
+- **Supabase**
+
+### Infrastructure & Services
+
+- **Docker Compose** — local development environment
+- **Vercel** — production hosting and deployment
+- **Cloudinary** — book cover image storage and management
+- **GitHub** — source control and CI/CD integration
+
+## Architecture
+
+Rainbound uses different infrastructure for local development and production.
+
+### Local Development
+
+```text
+Docker Compose
+      │
+      ├── Next.js
+      │
+      └── PostgreSQL
+```
+
+Docker provides an isolated development environment containing both the application and database.
+
+### Production
+
+```text
+                  GitHub
+                     │
+                     ▼
+                  Vercel
+                     │
+              Next.js Application
+                │           │
+                ▼           ▼
+           Supabase     Cloudinary
+           PostgreSQL   Book Covers
+```
+
+The application source code is hosted on GitHub and automatically deployed to Vercel.
+
+Next.js handles the application, server-side rendering, and server actions. Prisma provides database access, while Supabase hosts the production PostgreSQL database.
+
+Cloudinary is used to store and manage uploaded book covers instead of storing image files directly in the application or database.
+
+## Production Deployment
+
+The production environment is hosted using **Vercel**, **Supabase**, and **Cloudinary**.
+
+### Vercel
+
+Vercel hosts the Next.js application and handles production deployments directly from the GitHub repository.
+
+Every new commit pushed to the configured production branch can trigger a new deployment, making the deployment workflow simple and integrated with source control.
+
+Environment variables such as database credentials and Cloudinary API credentials are configured directly in the Vercel project rather than being committed to the repository.
+
+### Supabase
+
+Supabase provides the production PostgreSQL database used by Rainbound.
+
+Prisma connects to Supabase PostgreSQL through its connection poolers, allowing the application to work with the database in a serverless production environment.
+
+The database schema and migrations are managed with Prisma.
+
+### Cloudinary
+
+Cloudinary handles book cover storage.
+
+When a book cover is uploaded, the image is sent to Cloudinary and the resulting URL and public identifier are stored with the book record in PostgreSQL.
+
+This keeps image files separate from the application server while allowing covers to be efficiently delivered through Cloudinary's infrastructure.
+
+## Environment Variables
+
+Create a local `.env` file with the required environment variables:
+
+```env
+DATABASE_URL=
+DIRECT_URL=
+
+CLOUDINARY_CLOUD_NAME=
+CLOUDINARY_API_KEY=
+CLOUDINARY_API_SECRET=
+```
+
+For production, these variables should be configured through the hosting platform rather than committed to the repository.
+
+A `.env.example` file is included as a reference without exposing credentials.
+
+## Running Locally
 
 ### Requirements
 
-- Docker Desktop with Docker Compose
+- Node.js
+- Docker Desktop
+- Docker Compose
 - Git
 
-### Running with Docker
+### Start the development environment
 
-Start the development environment from the project root:
+From the project root:
 
 ```bash
 docker compose up --build
 ```
 
-Open the application at [http://localhost:3000](http://localhost:3000).
+The application will be available at:
 
-The Docker setup starts the Next.js app and a PostgreSQL database.
+```text
+http://localhost:3000
+```
 
-### Database commands
+Docker Compose starts both the Next.js application and the PostgreSQL database.
+
+### Database Commands
 
 Create and apply a migration after changing `prisma/schema.prisma`:
 
@@ -74,13 +188,13 @@ Create and apply a migration after changing `prisma/schema.prisma`:
 docker compose exec app npx prisma migrate dev --name describe-your-change
 ```
 
-Regenerate the Prisma Client when needed:
+Regenerate the Prisma Client:
 
 ```bash
 docker compose exec app npx prisma generate
 ```
 
-Check the running services:
+Check running services:
 
 ```bash
 docker compose ps
@@ -92,138 +206,71 @@ Stop the development environment:
 docker compose down
 ```
 
-The database data is stored in the `db_data` Docker volume. To remove the containers and database volume too:
+To also remove the PostgreSQL Docker volume:
 
 ```bash
 docker compose down -v
 ```
 
-### Available scripts
+## Available Scripts
 
 ```bash
-npm run dev    # Start Next.js locally
-npm run lint   # Run ESLint
-npm run build  # Create a production build
-npm run start  # Start the production server
+npm run dev       # Start the development server
+npm run lint      # Run ESLint
+npm run build     # Generate Prisma Client and create a production build
+npm run start     # Start the production server
 ```
 
-### Project structure
+## Project Structure
 
 ```text
-app/                   Next.js pages, layouts, and server actions
-components/            Reusable UI components
-lib/                   Shared services, including Prisma
-prisma/                Prisma schema and migrations
-generated/prisma/     Generated Prisma Client
-public/                Static assets, including book covers
+app/
+├── books/              Book pages and server actions
+└── ...
+
+components/             Reusable UI components
+
+lib/
+├── prisma.ts            Prisma client configuration
+├── upload.ts            Cloudinary integration
+└── ...
+
+prisma/
+├── schema.prisma        Database schema
+└── migrations/          Database migrations
+
+public/                  Static assets
+
+generated/
+└── prisma/              Generated Prisma Client
 ```
 
-## Portugues
+The Prisma Client inside `generated/prisma` is generated automatically during the build process and is not required to be committed to the repository.
+
+## Design & Prototyping
+
+The interface, layout, and navigation flows were designed and prototyped in Figma before implementation.
+
+Explore the complete prototype:
 
 <p align="center">
-  <strong>Um espaço pessoal para organizar seus livros e sua jornada de leitura.</strong>
+  <a href="https://www.figma.com/design/kVktZSQ9hyPnLbTLgkpAA4/Rainbound?node-id=77-667&t=mSs14KiP1G4yguAA-1">
+    <img src="https://img.shields.io/badge/View%20Figma%20Prototype-F24E1E?style=for-the-badge&logo=figma&logoColor=white" alt="View Figma Prototype">
+  </a>
 </p>
 
-Rainbound e um gerenciador pessoal de livros feito com Next.js. Ele ajuda a organizar sua biblioteca e acompanhar seu progresso de leitura em um so lugar.
+## Future Plans
 
-O projeto permite usar um livro de duas formas:
+Some ideas planned for future versions include:
 
-- Cadastrar apenas os dados do livro na biblioteca, como titulo, autor, status, nota, paginas, categoria e observacoes.
-- Cadastrar um livro e usar sua pagina para acompanhar a leitura, atualizar o status e registrar observacoes enquanto voce le.
+- In-app book reading
+- Reading sessions and history
+- Reading goals
+- Statistics and reading insights
+- More advanced library filters
+- Reading streaks
+- Custom shelves and collections
 
-### Funcionalidades
+## License
 
-- Biblioteca responsiva com cartoes em formato de capa
-- Busca por titulo ou autor
-- Filtro por status de leitura
-- Cadastro, edicao e exclusao de livros
-- Status de leitura, nota, pagina atual e total de paginas
-- Indicador de progresso da leitura
-- Categorias e observacoes pessoais
-- Formularios responsivos para desktop e celular
-- Persistencia em PostgreSQL usando Prisma
-
-### Design e prototipagem
-
-A interface e os fluxos de navegacao foram planejados no Figma. Acesse o prototipo completo:
-
-[![Abrir prototipo no Figma](https://img.shields.io/badge/Abrir%20prototipo%20no%20Figma-F24E1E?style=for-the-badge&logo=figma&logoColor=white)](https://www.figma.com/design/kVktZSQ9hyPnLbTLgkpAA4/Rainbound?node-id=77-667&t=mSs14KiP1G4yguAA-1)
-
-### Tecnologias
-
-- Next.js 16 com App Router
-- React 19 e TypeScript
-- PostgreSQL 16
-- Prisma 7
-- Tailwind CSS 4
-- Docker Compose
-- Icones Lucide e `lucide-react-motion`
-
-### Requisitos
-
-- Docker Desktop com Docker Compose
-- Git
-
-### Executando com Docker
-
-Na raiz do projeto, inicie o ambiente de desenvolvimento:
-
-```bash
-docker compose up --build
-```
-
-Abra a aplicacao em [http://localhost:3000](http://localhost:3000).
-
-O Docker inicia o aplicativo Next.js e um banco PostgreSQL.
-
-### Comandos do banco
-
-Crie e aplique uma migration depois de alterar o `prisma/schema.prisma`:
-
-```bash
-docker compose exec app npx prisma migrate dev --name descreva-sua-alteracao
-```
-
-Gere novamente o Prisma Client quando necessario:
-
-```bash
-docker compose exec app npx prisma generate
-```
-
-Veja o estado dos servicos:
-
-```bash
-docker compose ps
-```
-
-Pare o ambiente de desenvolvimento:
-
-```bash
-docker compose down
-```
-
-Os dados do banco ficam no volume Docker `db_data`. Para remover tambem os containers e o volume do banco:
-
-```bash
-docker compose down -v
-```
-
-### Scripts disponiveis
-
-```bash
-npm run dev    # Inicia o Next.js localmente
-npm run lint   # Executa o ESLint
-npm run build  # Cria o build de producao
-npm run start  # Inicia o servidor de producao
-```
-
-### Estrutura do projeto
-
-```text
-app/                   Paginas, layouts e server actions do Next.js
-components/            Componentes reutilizaveis de interface
-lib/                   Servicos compartilhados, incluindo o Prisma
-prisma/                Schema e migrations do Prisma
-generated/prisma/     Prisma Client gerado
-public/                Arquivos estaticos, incluindo capas de livros
-```
+This project is intended for personal and portfolio use.
