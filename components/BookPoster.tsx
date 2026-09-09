@@ -1,8 +1,7 @@
 import Image from "next/image";
-import Link from "next/link";
-import { Ellipsis } from "lucide-react";
 
 import { statusColor, statusLabel } from "@/app/books/types";
+import BookActionsMenu from "./BookActionsMenu";
 
 type BookCardProps = {
   book: {
@@ -12,7 +11,7 @@ type BookCardProps = {
     currentPage: number;
     totalPages: number;
     status: string;
-    //coverUrl: string;
+    coverUrl: string;
   };
 };
 
@@ -21,21 +20,18 @@ function bookProgress(currentPage: number, totalPages: number) {
 }
 
 export default function BookPoster({ book }: BookCardProps) {
-  console.log(book);
+  //console.log(book);
   return (
-    <Link
-      href={`/books/${book.id}`}
-      className="mx-auto grid w-full max-w-[196px] grid-rows-[auto_auto_auto] gap-1"
-    >
-      <span
-        aria-label={`Opções do livro ${book.title}`}
-        className="flex items-center justify-self-end rounded-md p-1 text-contrast transition hover:bg-interaction hover:text-primary"
-      >
-        <Ellipsis size={12} strokeWidth={2} />
-      </span>
+    <div className="mx-auto grid w-full max-w-[196px] grid-rows-[auto_auto_auto] gap-1">
+      <div className="flex justify-end">
+        <BookActionsMenu bookId={book.id} bookTitle={book.title} />
+      </div>
       <div className="relative aspect-[7/10] w-full">
         <Image
-          src="/Capa_do_livro_Coração_de_Aço.jpg"
+          src={
+            book.coverUrl ? book.coverUrl : "/Capa_do_livro_Coração_de_Aço.jpg"
+          }
+          sizes="full"
           alt={`Capa do livro ${book.title}`}
           fill
           className="rounded-md object-cover shadow-md shadow-black/50"
@@ -50,6 +46,6 @@ export default function BookPoster({ book }: BookCardProps) {
         <p>Livro</p>
         <p>{bookProgress(book.currentPage, book.totalPages)}%</p>
       </div>
-    </Link>
+    </div>
   );
 }

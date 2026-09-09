@@ -1,9 +1,10 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { FormEvent, useRef, useState, useTransition } from "react";
+import { FormEvent, useTransition } from "react";
 import { statusLabel } from "@/app/books/types";
-import { Filter, Search } from "lucide-react";
+import { Filter } from "lucide-react";
+import SearchInput from "./SearchInput";
 
 const statusOptions = ["WANT_TO_READ", "READING", "READ", "ABANDONED"];
 
@@ -12,9 +13,8 @@ const stylePattern =
 
 export function FilterForm({ q, status }: { q?: string; status?: string }) {
   const router = useRouter();
-  const [searchOpen, setSearchOpen] = useState(Boolean(q));
+
   const [isPending, startTransition] = useTransition();
-  const searchInputRef = useRef<HTMLInputElement>(null);
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -35,42 +35,13 @@ export function FilterForm({ q, status }: { q?: string; status?: string }) {
     });
   }
 
-  function openSearch() {
-    const searchInput = searchInputRef.current;
-
-    setSearchOpen(true);
-    searchInput?.classList.remove("hidden");
-    searchInput?.classList.add("block");
-    searchInput?.focus();
-    searchInput?.select();
-  }
-
   return (
     <form
       onSubmit={handleSubmit}
       className="mb-6 grid grid-cols-[1fr_44px] gap-3 wrap"
     >
       <div className="flex min-w-0 gap-5">
-        <input
-          ref={searchInputRef}
-          type="text"
-          name="q"
-          defaultValue={q ?? ""}
-          placeholder="Buscar por título ou autor..."
-          onChange={(e) => e.target.form?.requestSubmit()}
-          onBlur={() => setSearchOpen(false)}
-          className={`${stylePattern} min-w-0 flex-1 ${searchOpen ? "block" : "hidden"} sm:block`}
-        />
-        {!searchOpen && (
-          <button
-            type="button"
-            aria-label="Abrir busca"
-            onClick={openSearch}
-            className={`${stylePattern} flex aspect-square items-center justify-center rounded-lg p-0 cursor-pointer sm:hidden`}
-          >
-            <Search size={18} />
-          </button>
-        )}
+        <SearchInput q={q} />
         <select
           name="status"
           defaultValue={status ?? ""}

@@ -31,6 +31,7 @@ model Book {
   rating      Int?
   category    String?
   notes       String?
+  coverUrl    String?
   startedAt   DateTime?
   finishedAt  DateTime?
   createdAt   DateTime      @default(now())

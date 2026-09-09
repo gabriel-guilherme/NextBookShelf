@@ -1,10 +1,7 @@
 import { prisma } from "@/lib/prisma";
-import Link from "next/link";
 import type { Prisma } from "@/generated/prisma/client";
 
 import { FilterForm } from "@/components/FilterForm";
-
-import { statusLabel, statusColor } from "./types";
 import BookPoster from "@/components/BookPoster";
 
 export default async function BooksPage({
@@ -53,7 +50,7 @@ export default async function BooksPage({
         </p>
       )}
 
-      <ul className="grid grid-cols-2 gap-3 md:grid-cols-4 lg:grid-cols-6 overflow-y-auto max-h-200">
+      <ul className="grid grid-cols-2 gap-3 md:grid-cols-4 lg:grid-cols-6">
         {books.map((book) => (
           <li key={book.id}>
             <BookPoster
@@ -64,6 +61,7 @@ export default async function BooksPage({
                 currentPage: book.currentPage,
                 totalPages: book.totalPages ?? 0,
                 status: book.status,
+                coverUrl: book.coverUrl || "",
               }}
             />
           </li>

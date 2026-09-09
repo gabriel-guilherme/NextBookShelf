@@ -20,6 +20,7 @@ export async function createBook(formData: FormData) {
   const currentPage = Number(currentPageRaw);
   const category = formData.get("category") as string;
   const notes = formData.get("notes") as string;
+  const coverUrl = formData.get("coverUrl") as string;
 
   if (!title || !author) {
     throw new Error("Título e autor são obrigatórios");
@@ -35,6 +36,7 @@ export async function createBook(formData: FormData) {
       currentPage,
       category,
       notes,
+      coverUrl,
     },
   });
 

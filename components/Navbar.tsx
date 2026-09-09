@@ -2,7 +2,8 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Plus, CloudRainWind } from "lucide-react-motion";
+import { CloudRainWind } from "lucide-react-motion";
+import { Plus } from "lucide-react";
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -18,14 +19,14 @@ export default function Navbar() {
         <div className="flex items-center gap-3 justify-self-start sm:gap-6 sm:justify-self-auto">
           <Link
             href="/"
-            className={`text-sm font-medium transition sm:text-xl ${isHomeRoute ? "text-secondary" : "text-contrast hover:text-secondary"}`}
+            className={`text-sm font-medium transition sm:text-xl text-contrast ${isHomeRoute ? "opacity-100" : "opacity-60 hover:opacity-100"}`}
           >
             Início
           </Link>
           <Link
             href="/"
             data-motion-icon-group
-            className="flex gap-2 items-center justify-center cursor-pointer order-first whitespace-nowrap text-2xl font-bold text-interaction-contrast transition text-contrast hover:text-interaction sm:order-none"
+            className={`flex gap-2 items-center justify-center cursor-pointer order-first whitespace-nowrap text-2xl font-bold ${isHomeRoute ? "opacity:100" : "opacity:60 hover:opacity:60"} transition text-contrast hover:text-contrast sm:order-none`}
           >
             <CloudRainWind aria-hidden="true" trigger="parent-hover" />
 
@@ -33,7 +34,7 @@ export default function Navbar() {
           </Link>
           <Link
             href="/books"
-            className={`text-sm font-medium transition sm:text-xl ${isBookRoute ? "text-secondary" : "text-contrast hover:text-secondary"}`}
+            className={`text-sm font-medium transition sm:text-xl text-contrast ${isBookRoute ? "opacity-100" : "opacity-60 hover:opacity-100"}`}
           >
             Biblioteca
           </Link>

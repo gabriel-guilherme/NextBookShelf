@@ -1,6 +1,6 @@
 import Image from "next/image";
-import Link from "next/link";
-import { Ellipsis } from "lucide-react";
+import BookActionsMenu from "./BookActionsMenu";
+import { deleteBook } from "@/app/actions";
 
 type BookCardProps = {
   book: {
@@ -9,7 +9,7 @@ type BookCardProps = {
     author: string;
     currentPage: number;
     totalPages: number;
-    //coverUrl: string;
+    coverUrl: string;
   };
 };
 
@@ -18,16 +18,20 @@ function bookProgress(currentPage: number, totalPages: number) {
 }
 
 export default function BookCard({ book }: BookCardProps) {
-  console.log(book);
   return (
-    <Link
-      href={`/books/${book.id}`}
+    <div
+      //href={`/books/${book.id}`}
       className="group block rounded-xl bg-primary p-4 shadow-md shadow-black/50 transition hover:shadow-sm"
     >
       <div className="grid grid-cols-[70px_1fr_30px] items-center gap-4">
         <div className="relative h-25 w-[70px]">
           <Image
-            src="/Capa_do_livro_Coração_de_Aço.jpg"
+            src={
+              book.coverUrl
+                ? book.coverUrl
+                : "/Capa_do_livro_Coração_de_Aço.jpg"
+            }
+            sizes="full"
             alt={`Capa do livro ${book.title}`}
             fill
             className="rounded-md object-cover shadow-md shadow-black/50"
@@ -40,13 +44,9 @@ export default function BookCard({ book }: BookCardProps) {
             Livro - {bookProgress(book.currentPage, book.totalPages)}%
           </p>
         </div>
-        <span
-          aria-label={`Opções do livro ${book.title}`}
-          className="flex items-center justify-center rounded-md p-1 text-contrast transition hover:bg-interaction hover:text-primary"
-        >
-          <Ellipsis size={24} strokeWidth={2} />
-        </span>
+
+        <BookActionsMenu bookId={book.id} bookTitle={book.title} />
       </div>
-    </Link>
+    </div>
   );
 }
