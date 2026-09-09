@@ -91,6 +91,7 @@ export async function deleteBook(formData: FormData) {
     where: { id },
   });
 
+  revalidatePath("/");
   revalidatePath("/books");
   redirect("/books");
 }
