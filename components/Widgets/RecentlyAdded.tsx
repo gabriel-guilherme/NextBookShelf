@@ -16,7 +16,13 @@ export default async function RecentlyAdded() {
       <ul className="flex flex-col gap-3">
         {recentlyAdded.map((book) => (
           <li key={book.id}>
-            <BookCard book={{ ...book, totalPages: book.totalPages ?? 0 }} />
+            <BookCard
+              book={{
+                ...book,
+                totalPages: book.totalPages ?? 0,
+                coverUrl: book.coverUrl ?? "",
+              }}
+            />
           </li>
         ))}
       </ul>

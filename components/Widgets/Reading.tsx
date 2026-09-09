@@ -28,7 +28,13 @@ export default async function Reading() {
               : null;
           return (
             <li key={book.id}>
-              <BookCard book={{ ...book, totalPages: book.totalPages ?? 0 }} />
+              <BookCard
+                book={{
+                  ...book,
+                  totalPages: book.totalPages ?? 0,
+                  coverUrl: book.coverUrl ?? "",
+                }}
+              />
             </li>
           );
         })}

@@ -38,7 +38,9 @@ export default function BookActionsMenu({
     e.stopPropagation();
 
     if (confirm(`Tem certeza que deseja excluir "${bookTitle}"?`)) {
-      deleteBook(bookId);
+      const formData = new FormData();
+      formData.append("id", bookId.toString());
+      await deleteBook(formData);
     }
     setIsOpen(false);
   };
