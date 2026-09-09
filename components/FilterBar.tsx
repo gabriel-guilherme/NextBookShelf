@@ -11,15 +11,7 @@ const statusOptions = ["WANT_TO_READ", "READING", "READ", "ABANDONED"];
 const stylePattern =
   "rounded-lg px-3 py-2 text-sm text-primary outline-none bg-contrast shadow shadow-black/75 opacity-85 focus:opacity-100 hover:opacity-100 focus:border-gray-900";
 
-export function FilterBar({
-  q,
-  status,
-  sort,
-}: {
-  q?: string;
-  status?: string;
-  sort?: string;
-}) {
+export function FilterBar({ q, status }: { q?: string; status?: string }) {
   const router = useRouter();
 
   const [isPending, startTransition] = useTransition();

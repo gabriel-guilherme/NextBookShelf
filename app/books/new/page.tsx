@@ -79,7 +79,10 @@ export default function NewBookPage() {
           className="grid w-full grid-cols-1 gap-8 md:grid-cols-[40%_minmax(0,1fr)] md:gap-30"
         >
           <section className="relative mx-auto aspect-[3/4] w-full max-w-64 md:mx-0 md:max-w-none">
-            <InputCover src={book.coverUrl} />
+            <InputCover
+              src={book.coverUrl ?? undefined}
+              alt={`Capa de ${book.title}`}
+            />
           </section>
 
           <section className="flex w-full flex-col gap-6 text-sm font-medium text-contrast">

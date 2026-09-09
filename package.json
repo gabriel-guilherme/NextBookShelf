@@ -11,6 +11,7 @@
   "dependencies": {
     "@prisma/adapter-pg": "^7.10.0",
     "@prisma/client": "7.10.0",
+    "cloudinary": "^2.11.0",
     "dotenv": "^17.4.2",
     "lucide-react": "^1.41.0",
     "lucide-react-motion": "^0.5.1",

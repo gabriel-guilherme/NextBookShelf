@@ -65,7 +65,10 @@ export default function EditBookForm({ book }: EditBookFormProps) {
         </div>
 
         <div className="relative mx-auto aspect-[3/4] w-full max-w-64 md:mx-0 md:max-w-none">
-          <InputCover src={book.coverUrl ? book.coverUrl : ""} />
+          <InputCover
+            src={book.coverUrl ? book.coverUrl : ""}
+            alt={`Capa de ${book.title}`}
+          />
         </div>
       </section>
 

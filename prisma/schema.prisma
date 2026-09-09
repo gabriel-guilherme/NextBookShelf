@@ -32,6 +32,7 @@ model Book {
   category    String?
   notes       String?
   coverUrl    String?
+  coverPublicId String?
   startedAt   DateTime?
   finishedAt  DateTime?
   createdAt   DateTime      @default(now())

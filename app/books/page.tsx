@@ -75,7 +75,7 @@ export default async function BooksPage({
         <h1 className="text-2xl font-bold text-contrast">Meus Livros</h1>
       </div>
 
-      <FilterBar q={q} status={status} sort={sort} />
+      <FilterBar q={q} status={status} />
 
       {books.length === 0 && (
         <p className="text-gray-500">
