@@ -1,6 +1,7 @@
 import Image from "next/image";
 import BookActionsMenu from "./BookActionsMenu";
 import { deleteBook } from "@/app/actions";
+import ProgressBar from "./ProgressBar";
 
 type BookCardProps = {
   book: {
@@ -38,11 +39,24 @@ export default function BookCard({ book }: BookCardProps) {
           />
         </div>
         <div className="grid grid-rows-[1fr_1fr_30px] gap-1">
-          <h3 className="text-lg font-bold text-contrast">{book.title}</h3>
+          <h3
+            className="text-lg font-bold text-contrast truncate min-w-0"
+            title={book.title}
+          >
+            {book.title}
+          </h3>
           <p className="text-base text-contrast">{book.author}</p>
-          <p className="flex text-sm text-contrast opacity-75 items-end">
-            Livro - {bookProgress(book.currentPage, book.totalPages)}%
-          </p>
+          <div className="flex gap-10 w-full">
+            <p className="flex text-sm text-contrast opacity-75 items-end">
+              Livro
+            </p>
+            <div className="flex-1">
+              <ProgressBar
+                currentPage={book.currentPage}
+                totalPages={book.totalPages}
+              />
+            </div>
+          </div>
         </div>
 
         <BookActionsMenu bookId={book.id} bookTitle={book.title} />

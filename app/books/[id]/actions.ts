@@ -1,9 +1,9 @@
 "use server";
 
-import { prisma } from "@/lib/prisma";
-import { redirect } from "next/navigation";
-import { revalidatePath } from "next/cache";
 import { ReadingStatus } from "@/generated/prisma/enums";
+import { prisma } from "@/lib/prisma";
+import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 
 export async function updateBook(formData: FormData) {
   const id = Number(formData.get("id"));
@@ -48,7 +48,6 @@ export async function updateBook(formData: FormData) {
 
   revalidatePath("/books");
   revalidatePath(`/books/${id}`);
-  redirect(`/books/${id}`);
 }
 
 export async function deleteBook(formData: FormData) {
