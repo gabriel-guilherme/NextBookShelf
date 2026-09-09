@@ -66,7 +66,7 @@ export default function OpenLibrarySearch({
           setIsLoading(false);
         }
       }
-    }, 350);
+    }, 150);
 
     return () => {
       window.clearTimeout(timeoutId);
