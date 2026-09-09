@@ -3,6 +3,7 @@
 import { prisma } from "@/lib/prisma";
 import { ReadingStatus } from "@/generated/prisma/enums";
 import { uploadBookCover } from "@/lib/upload";
+import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 export async function createBook(formData: FormData) {
@@ -61,5 +62,7 @@ export async function createBook(formData: FormData) {
     },
   });
 
+  revalidatePath("/");
+  revalidatePath("/books");
   redirect("/books");
 }
