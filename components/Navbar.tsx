@@ -8,6 +8,7 @@ import { Plus } from "lucide-react";
 export default function Navbar() {
   const pathname = usePathname();
 
+  const isHomeRoute = pathname === "/";
   const isDashboardRoute = pathname === "/dashboard";
   const isBookRoute = pathname === "/books" || pathname.startsWith("/books/");
   const isNewBookRoute = pathname === "/books/new";
@@ -26,7 +27,7 @@ export default function Navbar() {
           <Link
             href="/"
             data-motion-icon-group
-            className={`flex gap-2 items-center justify-center cursor-pointer order-first whitespace-nowrap text-2xl font-bold ${isDashboardRoute ? "opacity:100" : "opacity:60 hover:opacity:60"} transition text-contrast hover:text-contrast sm:order-none`}
+            className={`flex gap-2 items-center justify-center cursor-pointer order-first whitespace-nowrap text-2xl font-bold ${isHomeRoute ? "opacity:100 text-interaction" : "opacity:60 hover:opacity:60"} transition text-contrast hover:text-interaction sm:order-none`}
           >
             <CloudRainWind aria-hidden="true" trigger="parent-hover" />
 
