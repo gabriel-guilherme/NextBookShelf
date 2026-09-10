@@ -8,7 +8,7 @@ import { Plus } from "lucide-react";
 export default function Navbar() {
   const pathname = usePathname();
 
-  const isHomeRoute = pathname === "/";
+  const isDashboardRoute = pathname === "/dashboard";
   const isBookRoute = pathname === "/books" || pathname.startsWith("/books/");
   const isNewBookRoute = pathname === "/books/new";
 
@@ -18,15 +18,15 @@ export default function Navbar() {
         <div className="hidden sm:block" />
         <div className="flex items-center gap-3 justify-self-start sm:gap-6 sm:justify-self-auto">
           <Link
-            href="/"
-            className={`text-sm font-medium transition sm:text-xl text-contrast ${isHomeRoute ? "opacity-100" : "opacity-60 hover:opacity-100"}`}
+            href="/dashboard"
+            className={`text-sm font-medium transition sm:text-xl text-contrast ${isDashboardRoute ? "opacity-100" : "opacity-60 hover:opacity-100"}`}
           >
             Início
           </Link>
           <Link
             href="/"
             data-motion-icon-group
-            className={`flex gap-2 items-center justify-center cursor-pointer order-first whitespace-nowrap text-2xl font-bold ${isHomeRoute ? "opacity:100" : "opacity:60 hover:opacity:60"} transition text-contrast hover:text-contrast sm:order-none`}
+            className={`flex gap-2 items-center justify-center cursor-pointer order-first whitespace-nowrap text-2xl font-bold ${isDashboardRoute ? "opacity:100" : "opacity:60 hover:opacity:60"} transition text-contrast hover:text-contrast sm:order-none`}
           >
             <CloudRainWind aria-hidden="true" trigger="parent-hover" />
 

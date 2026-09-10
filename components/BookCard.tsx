@@ -13,17 +13,9 @@ type BookCardProps = {
   };
 };
 
-function bookProgress(currentPage: number, totalPages: number) {
-  return ((currentPage / totalPages) * 100).toFixed(2);
-}
-
 export default function BookCard({ book }: BookCardProps) {
-  console.log(book.currentPage, book.totalPages);
   return (
-    <div
-      //href={`/books/${book.id}`}
-      className="group block rounded-xl bg-primary p-4 shadow-md shadow-black/50 transition hover:shadow-sm"
-    >
+    <div className="group block rounded-xl bg-primary p-4 shadow-md shadow-black/50 transition hover:shadow-sm">
       <div className="grid grid-cols-[70px_1fr_30px] items-center gap-4">
         <div className="relative h-25 w-[70px]">
           <Image

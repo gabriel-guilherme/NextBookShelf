@@ -20,7 +20,6 @@ function bookProgress(currentPage: number, totalPages: number) {
 }
 
 export default function BookPoster({ book }: BookCardProps) {
-  //console.log(book);
   return (
     <div className="mx-auto grid w-full max-w-[196px] grid-rows-[auto_auto_auto] gap-1">
       <div className="flex justify-end">

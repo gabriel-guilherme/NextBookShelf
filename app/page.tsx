@@ -1,22 +1,9 @@
-import BookStatus from "@/components/Widgets/BookStatus";
-import Reading from "@/components/Widgets/Reading";
-import RecentlyAdded from "@/components/Widgets/RecentlyAdded";
+import RainWindow from "@/components/RainWindow/RainWindow";
 
-export default async function HomePage() {
+export default function Home() {
   return (
-    <main className="mx-auto max-w-5xl px-4 py-10">
-      <h1 className="mb-1 text-2xl font-bold text-contrast">Aga um</h1>
-      <p className="mb-8 text-primary">Alguma frase bacana...</p>
-
-      {/* Grid de estatísticas */}
-      <BookStatus />
-
-      <div className="grid gap-8 sm:grid-cols-2">
-        <Reading />
-
-        {/* Adicionados recentemente */}
-        <RecentlyAdded />
-      </div>
+    <main className="min-h-screen">
+      <RainWindow />
     </main>
   );
 }

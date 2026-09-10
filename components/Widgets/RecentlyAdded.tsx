@@ -9,7 +9,6 @@ export default async function RecentlyAdded() {
     }),
   ]);
 
-  console.log(recentlyAdded);
   return (
     <section>
       <h2 className="mb-3 text-sm font-semibold uppercase tracking-wide text-contrast">

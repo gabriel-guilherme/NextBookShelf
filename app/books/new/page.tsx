@@ -49,7 +49,7 @@ export default function NewBookPage() {
       author: selectedBook.author_name?.[0] ?? "",
       totalPages: selectedBook.number_of_pages_median?.toString() ?? "",
       coverUrl: selectedBook.cover_i
-        ? `https://covers.openlibrary.org/b/id/${selectedBook.cover_i}-M.jpg`
+        ? `https://covers.openlibrary.org/b/id/${selectedBook.cover_i}-L.jpg`
         : "",
     }));
   }
