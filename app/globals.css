@@ -1,6 +1,8 @@
 @import "tailwindcss";
 
 @theme {
+  /* Cores */
+  --color-darkest: #080c0d;
   --color-primary: #27191c;
   --color-secondary: #2d3839;
   --color-interaction-contrast: #114d4d;

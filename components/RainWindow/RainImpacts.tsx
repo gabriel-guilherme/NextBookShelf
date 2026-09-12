@@ -20,7 +20,7 @@ export default function RainImpacts({ isPaused }: { isPaused: boolean }) {
           {impacts.map((impact) => (
             <motion.div
               key={impact.id}
-              className="absolute rounded-full bg-white/30"
+              className="absolute rounded-full bg-gradient-to-br from-white/[1] shadow-lg backdrop-filter backdrop-blur-md"
               style={{
                 left: `${impact.left}%`,
                 top: `${impact.top}%`,

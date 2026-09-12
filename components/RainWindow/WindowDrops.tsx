@@ -21,7 +21,7 @@ export default function WindowDrops({ isPaused }: { isPaused: boolean }) {
           {drops.map((drop) => (
             <motion.div
               key={drop.id}
-              className="absolute rounded-full bg-white/20 blur-[0.5px]"
+              className="absolute rounded-full bg-gradient-to-br from-white/[1] shadow-lg backdrop-filter backdrop-blur-md"
               style={{
                 left: `${drop.left}%`,
                 top: `${drop.top}%`,

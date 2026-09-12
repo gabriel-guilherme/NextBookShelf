@@ -2,9 +2,7 @@
 
 import { useState } from "react";
 import Rain from "./Rain";
-import RainImpacts from "./RainImpacts";
 import Sky from "./Sky";
-import WindowDrops from "./WindowDrops";
 import WindowFrame from "./WindowFrame";
 import { Volume2, VolumeX, Play, Pause } from "lucide-react";
 
@@ -18,9 +16,8 @@ export default function RainWindow() {
         <Sky />
 
         <Rain isPaused={isPaused} isMuted={isMuted} />
-        <WindowDrops isPaused={isPaused} />
-        <RainImpacts isPaused={isPaused} />
-        <WindowFrame />
+
+        <WindowFrame isPaused={isPaused} />
 
         {/* Botões de Controle*/}
         <div className="absolute top-4 right-4 z-50 flex items-center gap-2 transition-opacity duration-300">

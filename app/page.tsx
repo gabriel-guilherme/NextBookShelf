@@ -1,9 +1,18 @@
-import RainWindow from "@/components/RainWindow/RainWindow";
+import Collection from "@/components/Home/Collection";
+import Hero from "@/components/Home/Hero";
+import Thoughts from "@/components/Home/Thoughts";
 
-export default function Home() {
+export default async function Home() {
   return (
-    <main className="min-h-screen">
-      <RainWindow />
+    <main className="mx-auto">
+      {/* Hero */}
+      <Hero />
+
+      {/* Pensamentos */}
+      <Thoughts />
+
+      {/* Coleção */}
+      <Collection />
     </main>
   );
 }

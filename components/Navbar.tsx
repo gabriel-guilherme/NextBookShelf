@@ -14,7 +14,7 @@ export default function Navbar() {
   const isNewBookRoute = pathname === "/books/new";
 
   return (
-    <nav className="border-b border-gray-800 bg-primary shadow-md shadow-black/25 min-h-[96px]">
+    <nav className="bg-primary shadow-md shadow-black/25 min-h-[96px]">
       <div className="mx-auto grid min-h-[96px] grid-cols-[1fr_auto] items-center px-2 py-4 sm:grid-cols-[1fr_auto_1fr] sm:px-4">
         <div className="hidden sm:block" />
         <div className="flex items-center gap-3 justify-self-start sm:gap-6 sm:justify-self-auto">
