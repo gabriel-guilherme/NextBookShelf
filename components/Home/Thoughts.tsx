@@ -3,11 +3,16 @@
 import { motion, useScroll, useTransform } from "motion/react";
 import { useRef } from "react";
 
-type ThoughtsProps = {
-  notes?: string[];
+type BookNotes = {
+  title: string;
+  note: string;
 };
 
-export default function Thoughts({ notes }: ThoughtsProps) {
+type ThoughtsProps = {
+  books: BookNotes[];
+};
+
+export default function Thoughts({ books }: ThoughtsProps) {
   const sectionRef = useRef<HTMLElement>(null);
 
   const thought1Ref = useRef<HTMLDivElement>(null);
@@ -93,11 +98,15 @@ export default function Thoughts({ notes }: ThoughtsProps) {
         }}
       >
         <p className="line-clamp-3 text-[clamp(1rem,1.5vw,1.5rem)]">
-          Maybe this was foreshadowing all along...
+          &quot;
+          {books[0]?.note
+            ? books[0]?.note
+            : "Maybe this was foreshadowing all along..."}
+          &quot;
         </p>
 
         <p className="truncate text-[clamp(0.7rem,0.9vw,1rem)] opacity-50">
-          THE NAME OF THE WIND
+          {books[0]?.title ? books[0]?.title : "THE NAME OF THE WIND"}
         </p>
       </motion.div>
 
@@ -111,11 +120,13 @@ export default function Thoughts({ notes }: ThoughtsProps) {
         }}
       >
         <p className="line-clamp-3 text-[clamp(1rem,1.5vw,1.5rem)]">
-          Remember this chapter
+          &quot;
+          {books[1]?.note ? books[1]?.note : "Remember this chapter"}
+          &quot;
         </p>
 
         <p className="truncate text-[clamp(0.7rem,0.9vw,1rem)] opacity-50">
-          THE NAME OF THE WIND
+          {books[1]?.title ? books[1]?.title : "THE NAME OF THE WIND"}
         </p>
       </motion.div>
 
@@ -129,11 +140,15 @@ export default function Thoughts({ notes }: ThoughtsProps) {
         }}
       >
         <p className="line-clamp-3 text-[clamp(1rem,1.5vw,1.5rem)]">
-          &quot;Some stories stay with you long after the last page.&quot;
+          &quot;
+          {books[2]?.note
+            ? books[2]?.note
+            : "Some stories stay with you long after the last page."}
+          &quot;
         </p>
 
         <p className="truncate text-[clamp(0.7rem,0.9vw,1rem)] opacity-50">
-          THE NAME OF THE WIND
+          {books[2]?.title ? books[2]?.title : "THE NAME OF THE WIND"}
         </p>
       </motion.div>
 
@@ -147,11 +162,13 @@ export default function Thoughts({ notes }: ThoughtsProps) {
         }}
       >
         <p className="line-clamp-3 text-[clamp(1rem,1.5vw,1.5rem)]">
-          I really liked this character
+          &quot;
+          {books[3]?.note ? books[3]?.note : "I really liked this character."}
+          &quot;
         </p>
 
         <p className="truncate text-[clamp(0.7rem,0.9vw,1rem)] opacity-50">
-          THE NAME OF THE WIND
+          {books[3]?.title ? books[3]?.title : "THE NAME OF THE WIND"}
         </p>
       </motion.div>
 

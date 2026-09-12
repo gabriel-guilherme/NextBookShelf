@@ -4,13 +4,29 @@ import Thoughts from "@/components/Home/Thoughts";
 import { prisma } from "@/lib/prisma";
 
 export default async function Home() {
-  const books = await prisma.book.findMany({ take: 3 });
+  const thoughts = await prisma.$queryRaw<
+    {
+      title: string;
+      note: string;
+    }[]
+  >`
+    SELECT title, notes AS note
+    FROM "Book"
+    WHERE notes IS NOT NULL
+      AND TRIM(notes) <> ''
+    ORDER BY RANDOM()
+    LIMIT 4
+  `;
+
+  const books = await prisma.book.findMany({
+    take: 3,
+  });
 
   return (
     <main className="w-full">
       <Hero />
 
-      <Thoughts />
+      <Thoughts books={thoughts} />
 
       <Collection books={books} />
     </main>
