@@ -1,4 +1,7 @@
-export default function WindowFrame() {
+import RainImpacts from "./RainImpacts";
+import WindowDrops from "./WindowDrops";
+
+export default function WindowFrame({ isPaused }: { isPaused: boolean }) {
   return (
     <>
       {/* Vidro */}
@@ -6,7 +9,9 @@ export default function WindowFrame() {
 
       <div className="absolute inset-0 bg-gradient-to-br from-white/[0.08] via-transparent to-transparent" />
 
-      <div className="absolute inset-0 backdrop-blur-[2px]" />
+      <div className="absolute inset-0 backdrop-blur-[1px]" />
+      <WindowDrops isPaused={isPaused} />
+      <RainImpacts isPaused={isPaused} />
 
       {/* Rebaixo interno da janela */}
       <div

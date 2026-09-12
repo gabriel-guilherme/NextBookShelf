@@ -4,7 +4,7 @@ import { motion } from "motion/react";
 import NoSsr from "../NoSsr";
 import { useEffect, useRef } from "react";
 
-const drops = Array.from({ length: 400 }, (_, i) => ({
+const drops = Array.from({ length: 100 }, (_, i) => ({
   id: i,
   left: -20 + Math.random() * 160,
   diagonal: 30 + Math.random() * 10,
