@@ -2,88 +2,124 @@
 
 import RainWindow from "../RainWindow/RainWindow";
 import { motion, useScroll, useTransform } from "motion/react";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export default function Hero() {
-  const windowRef = useRef<HTMLDivElement>(null);
-  const messageRef = useRef<HTMLDivElement>(null);
+  const [isRainPaused, setIsRainPaused] = useState(false);
+  const [isDesktop, setIsDesktop] = useState(false);
 
-  const { scrollYProgress: windowScrollYProgress } = useScroll({
-    target: windowRef,
-    offset: ["start end", "end start"],
+  const heroRef = useRef<HTMLElement>(null);
+
+  const { scrollYProgress } = useScroll({
+    target: heroRef,
+    offset: ["start start", "end end"],
   });
 
-  const { scrollYProgress: messageScrollYProgress } = useScroll({
-    target: messageRef,
-    offset: ["start end", "end start"],
+  const { scrollYProgress: heroExitProgress } = useScroll({
+    target: heroRef,
+    offset: ["end end", "end start"],
   });
 
-  const windowOpacity = useTransform(
-    windowScrollYProgress,
-    [0, 0.4, 0.6, 0.8],
-    [0, 1, 1, 0],
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(min-width: 1024px)");
+
+    const update = () => setIsDesktop(mediaQuery.matches);
+
+    update();
+
+    mediaQuery.addEventListener("change", update);
+
+    return () => {
+      mediaQuery.removeEventListener("change", update);
+    };
+  }, []);
+
+  // Mobile:
+  // O texto começa visível, desaparece durante o scroll
+  // e permanece invisível até o final.
+  const messageOpacity = useTransform(
+    scrollYProgress,
+    [0, 0.4, 0.8, 1],
+    [1, 0, 1, 1],
   );
 
-  const messageOpacity = useTransform(
-    messageScrollYProgress,
-    [0, 0.4, 0.8, 1],
+  const desktopMessageOpacity = useTransform(
+    heroExitProgress,
+    [0, 0.4, 0.6, 1],
+    [1, 1, 0, 0],
+  );
+
+  // Mobile:
+  // A janela começa a aparecer enquanto o texto desaparece.
+  const windowOpacity = useTransform(
+    scrollYProgress,
+    [0.2, 0.4, 0.55],
+    [0, 1, 1],
+  );
+
+  const desktopWindowOpacity = useTransform(
+    heroExitProgress,
+    [0, 0.4, 0.6, 1],
     [1, 1, 0, 0],
   );
 
   return (
-    <section className="relative h-screen w-full overflow-hidden bg-darkest">
-      {/* Conteúdo */}
-      <div
-        className="
-          absolute inset-0
-          z-10
-          flex items-center justify-center
-          px-6 text-center
+    <section ref={heroRef} className="relative h-[200vh] w-full bg-darkest">
+      <div className="sticky top-0 flex h-screen w-full items-center overflow-hidden">
+        <div className="mx-auto grid w-full max-w-7xl grid-cols-1 items-center px-6 lg:grid-cols-[1.2fr_0.8fr] lg:gap-8 lg:px-10 xl:grid-cols-[1.15fr_0.85fr] xl:gap-16 2xl:max-w-[1500px]">
+          {/* Conteúdo */}
+          <motion.div
+            className="col-start-1 row-start-1 flex items-center justify-center text-center lg:col-start-2 lg:row-start-1"
+            style={{
+              opacity: isDesktop ? desktopMessageOpacity : messageOpacity,
+            }}
+          >
+            <motion.div
+              initial={{
+                opacity: 0,
+                y: 20,
+              }}
+              animate={{
+                opacity: 1,
+                y: 0,
+              }}
+              transition={{
+                duration: 0.8,
+                ease: "easeOut",
+              }}
+              className="w-full max-w-xl"
+            >
+              <h3 className="text-center text-lg text-interaction">
+                Rainbound
+              </h3>
 
-          lg:left-auto
-          lg:right-[8%]
-          lg:w-[480px]
-        "
-      >
-        <motion.div
-          ref={messageRef}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          style={{ opacity: messageOpacity }}
-        >
-          <h3 className="text-lg text-interaction">Rainbound</h3>
+              <h1 className="mt-4 text-4xl text-contrast sm:text-5xl lg:text-6xl xl:text-7xl">
+                Your little <br /> reading space
+              </h1>
 
-          <h1 className="mt-4 text-4xl text-contrast sm:text-5xl lg:text-6xl xl:text-7xl">
-            Your little <br /> reading space
-          </h1>
+              <p className="mx-auto mt-6 max-w-xl text-sm text-contrast opacity-50 sm:text-base lg:mx-0 lg:max-w-lg">
+                A quiet place for your books, your thoughts, and the stories you
+                <br />
+                haven&apos;t finished yet
+              </p>
 
-          <p className="mx-auto mt-6 max-w-xl text-sm text-contrast opacity-50 sm:text-base lg:max-w-lg">
-            A quiet place for your books, your thoughts, and the stories you
-            haven&apos;t finished yet
-          </p>
+              <button className="mt-8 rounded-3xl border border-interaction bg-interaction-contrast px-5 py-3 text-contrast transition-colors hover:bg-interaction">
+                Continue reading
+              </button>
+            </motion.div>
+          </motion.div>
 
-          <button className="mt-8 rounded-3xl border border-interaction bg-interaction-contrast px-5 py-3 text-contrast">
-            Continue reading
-          </button>
-        </motion.div>
+          {/* Janela */}
+          <motion.div
+            className="col-start-1 row-start-1 flex min-w-0 items-center justify-center lg:col-start-1 lg:row-start-1"
+            style={{
+              opacity: isDesktop ? desktopWindowOpacity : windowOpacity,
+            }}
+          >
+            <RainWindow isPaused={isRainPaused} setIsPaused={setIsRainPaused} />
+          </motion.div>
+        </div>
       </div>
-
-      {/* Janela */}
-      <motion.div
-        ref={windowRef}
-        style={{ opacity: windowOpacity }}
-        className="
-          absolute inset-y-0 left-0
-          z-10
-          flex w-full
-          items-center justify-center
-
-          lg:w-[calc(100%-480px)]
-        "
-      >
-        <RainWindow />
-      </motion.div>
     </section>
   );
 }
