@@ -34,9 +34,6 @@ export default function Hero() {
     };
   }, []);
 
-  // Mobile:
-  // O texto começa visível, desaparece durante o scroll
-  // e permanece invisível até o final.
   const messageOpacity = useTransform(
     scrollYProgress,
     [0, 0.4, 0.8, 1],
@@ -49,8 +46,6 @@ export default function Hero() {
     [1, 1, 0, 0],
   );
 
-  // Mobile:
-  // A janela começa a aparecer enquanto o texto desaparece.
   const windowOpacity = useTransform(
     scrollYProgress,
     [0.2, 0.4, 0.55],
