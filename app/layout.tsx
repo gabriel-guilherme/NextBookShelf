@@ -18,12 +18,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-BR">
-      <body className="flex min-h-screen flex-col bg-secondary">
+      <body className="min-h-screen bg-secondary">
         <Navbar />
-        <div className="flex-1">{children}</div>
-        <div className="shrink-0">
-          <Footer />
-        </div>
+        {children}
+        <Footer />
       </body>
     </html>
   );

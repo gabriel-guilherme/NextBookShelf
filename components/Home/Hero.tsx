@@ -31,19 +31,18 @@ export default function Hero() {
   );
 
   return (
-    <section className="relative min-h-[120vh] w-full overflow-hidden bg-darkest lg:min-h-[80vh]">
+    <section className="relative h-screen w-full overflow-hidden bg-darkest">
       {/* Conteúdo */}
       <div
         className="
-          relative z-10
-          flex min-h-screen flex-col items-center justify-center
-          px-6 pb-12 text-center
+          absolute inset-0
+          z-10
+          flex items-center justify-center
+          px-6 text-center
 
-          lg:absolute lg:inset-y-0 lg:right-0
-          lg:flex lg:min-h-0 lg:w-[480px]
-          lg:items-center lg:justify-center
-          lg:px-0 lg:pb-0 lg:pr-8
-          xl:right-[8%]
+          lg:left-auto
+          lg:right-[8%]
+          lg:w-[480px]
         "
       >
         <motion.div
@@ -73,18 +72,14 @@ export default function Hero() {
       {/* Janela */}
       <motion.div
         ref={windowRef}
-        style={{
-          opacity: windowOpacity,
-        }}
+        style={{ opacity: windowOpacity }}
         className="
-          relative z-10
-          flex w-full justify-center
-          pb-40
+          absolute inset-y-0 left-0
+          z-10
+          flex w-full
+          items-center justify-center
 
-          lg:absolute lg:inset-y-0 lg:left-0
           lg:w-[calc(100%-480px)]
-          lg:items-center lg:justify-center
-          lg:pb-0
         "
       >
         <RainWindow />
